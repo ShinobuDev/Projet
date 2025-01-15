@@ -23,16 +23,23 @@ class BankReconciliation:
             df1_temp = pd.read_excel(file1_path)
             df2_temp = pd.read_excel(file2_path)
             
-            # Sélectionner les colonnes avec leurs vrais noms
+            # Fonction pour convertir en date de manière sécurisée
+            def safe_to_date(x):
+                try:
+                    return pd.to_datetime(x).date() if pd.notna(x) else None
+                except:
+                    return None
+            
+            # Sélectionner les colonnes avec leurs vrais noms et convertir les dates
             self.df1 = pd.DataFrame({
-                'Date': df1_temp.iloc[:, 0],        # Colonne A
+                'Date': df1_temp.iloc[:, 0].apply(safe_to_date),  # Colonne A
                 'Description': df1_temp.iloc[:, 1],  # Colonne B
                 'MontantC': pd.to_numeric(df1_temp.iloc[:, 2], errors='coerce'),    # Colonne C (Crédit)
                 'MontantD': pd.to_numeric(df1_temp.iloc[:, 3], errors='coerce'),    # Colonne D (Débit)
             })
             
             self.df2 = pd.DataFrame({
-                'Date': df2_temp.iloc[:, 1],        # Colonne B
+                'Date': df2_temp.iloc[:, 1].apply(safe_to_date),  # Colonne B
                 'Description': df2_temp.iloc[:, 6],  # Colonne G
                 'MontantL': pd.to_numeric(df2_temp.iloc[:, 11], errors='coerce'),   # Colonne L (Débit)
                 'MontantM': pd.to_numeric(df2_temp.iloc[:, 12], errors='coerce'),   # Colonne M (Crédit)
@@ -71,6 +78,29 @@ class BankReconciliation:
         # Retourner vrai si au moins la moitié des mots correspondent
         return matches >= len(words1)/2 or matches >= len(words2)/2
 
+    def get_description_block(self, df: pd.DataFrame, current_idx: int) -> str:
+        """Récupère toutes les descriptions entre deux dates, comme dans le VBA"""
+        descriptions = []
+        current_row = current_idx
+        max_idx = len(df) - 1
+        
+        # Si la ligne actuelle n'a pas de date, remonter jusqu'à trouver une date
+        while current_row > 0 and pd.isna(df.iloc[current_row]['Date']):
+            current_row -= 1
+        
+        # Partir de la ligne suivant la date
+        start_row = current_row + 1
+        
+        # Chercher jusqu'à la prochaine date ou la fin du fichier
+        while start_row <= max_idx:
+            if pd.notna(df.iloc[start_row]['Date']):
+                break
+            if pd.notna(df.iloc[start_row]['Description']):
+                descriptions.append(str(df.iloc[start_row]['Description']))
+            start_row += 1
+        
+        return ' '.join(descriptions) if descriptions else ''
+
     def reconcile(self) -> pd.DataFrame:
         """Effectue le rapprochement bancaire selon les règles du VBA"""
         results = []
@@ -80,7 +110,9 @@ class BankReconciliation:
 
         # Premier passage : correspondance D-L par montant uniquement
         for idx1, row1 in self.df1.iterrows():
-            if pd.notna(row1['MontantD']) and row1['MontantD'] is not None:
+            if pd.notna(row1['Date']) and pd.notna(row1['MontantD']) and row1['MontantD'] is not None:
+                description_block = self.get_description_block(self.df1, idx1)
+                
                 for idx2, row2 in self.df2.iterrows():
                     if idx2 not in matched_rows2 and pd.notna(row2['MontantL']) and row2['MontantL'] is not None:
                         try:
@@ -88,7 +120,7 @@ class BankReconciliation:
                             if abs(round(float(row1['MontantD']), 2)) == abs(round(float(row2['MontantL']), 2)):
                                 results.append({
                                     'Date_1': row1['Date'],
-                                    'Description_1': row1['Description'],
+                                    'Description_1': description_block,
                                     'Description_2': row2['Description'],
                                     'Montant_1': row1['MontantD'],
                                     'Montant_2': row2['MontantL'],
@@ -103,7 +135,9 @@ class BankReconciliation:
 
         # Deuxième passage : correspondance C-M par montant uniquement
         for idx1, row1 in self.df1.iterrows():
-            if idx1 not in matched_rows1 and pd.notna(row1['MontantC']):
+            if pd.notna(row1['Date']) and idx1 not in matched_rows1 and pd.notna(row1['MontantC']):
+                description_block = self.get_description_block(self.df1, idx1)
+                
                 for idx2, row2 in self.df2.iterrows():
                     if idx2 not in matched_rows2 and pd.notna(row2['MontantM']):
                         try:
@@ -112,7 +146,7 @@ class BankReconciliation:
                                 if key not in special_amounts:
                                     results.append({
                                         'Date_1': row1['Date'],
-                                        'Description_1': row1['Description'],
+                                        'Description_1': description_block,
                                         'Description_2': row2['Description'],
                                         'Montant_1': row1['MontantC'],
                                         'Montant_2': row2['MontantM'],
@@ -128,11 +162,12 @@ class BankReconciliation:
 
         # Ajouter les lignes non appariées de df1
         for idx1, row1 in self.df1.iterrows():
-            if idx1 not in matched_rows1:
+            if pd.notna(row1['Date']) and idx1 not in matched_rows1:
+                description_block = self.get_description_block(self.df1, idx1)
                 if pd.notna(row1['MontantD']) or pd.notna(row1['MontantC']):
                     results.append({
                         'Date_1': row1['Date'],
-                        'Description_1': row1['Description'],
+                        'Description_1': description_block,
                         'Description_2': 'Non trouvé',
                         'Montant_1': row1['MontantD'] if pd.notna(row1['MontantD']) else row1['MontantC'],
                         'Montant_2': None,
@@ -184,36 +219,58 @@ class BankReconciliation:
 
     def export_to_excel(self, output_path: str) -> None:
         """Exporte les résultats dans un fichier Excel"""
-        df_results = self.reconcile()
-        
-        # Créer un nouveau classeur Excel
-        wb = openpyxl.Workbook()
-        ws = wb.active
-        ws.title = "Rapprochement"
+        try:
+            df_results = self.reconcile()
+            
+            # Créer un nouveau classeur Excel
+            wb = openpyxl.Workbook()
+            ws = wb.active
+            ws.title = "Rapprochement"
 
-        # Écrire les en-têtes
-        headers = ['Date', 'Description 1', 'Description 2', 'Montant 1', 'Montant 2', 'Statut', 'Type']
-        for col, header in enumerate(headers, 1):
-            ws.cell(row=1, column=col, value=header)
+            # Écrire les en-têtes
+            headers = ['Date', 'Description 1', 'Description 2', 'Montant 1', 'Montant 2', 'Statut', 'Type']
+            for col, header in enumerate(headers, 1):
+                ws.cell(row=1, column=col, value=header)
 
-        # Écrire les données et appliquer le formatage
-        for row_idx, row in df_results.iterrows():
-            ws_row = row_idx + 2
-            ws.cell(row=ws_row, column=1, value=row['Date_1'])
-            ws.cell(row=ws_row, column=2, value=row['Description_1'])
-            ws.cell(row=ws_row, column=3, value=row['Description_2'])
-            ws.cell(row=ws_row, column=4, value=row['Montant_1'])
-            ws.cell(row=ws_row, column=5, value=row['Montant_2'])
-            ws.cell(row=ws_row, column=6, value=row['Status'])
-            ws.cell(row=ws_row, column=7, value=row['Type'])
+            # Écrire les données et appliquer le formatage
+            for row_idx, row in df_results.iterrows():
+                ws_row = row_idx + 2
+                ws.cell(row=ws_row, column=1, value=row['Date_1'])
+                ws.cell(row=ws_row, column=2, value=row['Description_1'])
+                ws.cell(row=ws_row, column=3, value=row['Description_2'])
+                ws.cell(row=ws_row, column=4, value=row['Montant_1'])
+                ws.cell(row=ws_row, column=5, value=row['Montant_2'])
+                ws.cell(row=ws_row, column=6, value=row['Status'])
+                ws.cell(row=ws_row, column=7, value=row['Type'])
 
-            # Appliquer la couleur selon le statut
-            fill = self.green_fill if row['Status'] == 'Matched' else self.red_fill
-            for col in range(1, 8):
-                ws.cell(row=ws_row, column=col).fill = fill
+                # Appliquer la couleur selon le statut
+                fill = self.green_fill if row['Status'] == 'Matched' else self.red_fill
+                for col in range(1, 8):
+                    ws.cell(row=ws_row, column=col).fill = fill
 
-        # Sauvegarder le fichier
-        wb.save(output_path)
+            try:
+                # Essayer de sauvegarder le fichier
+                wb.save(output_path)
+            except PermissionError:
+                # Si le fichier est ouvert ou verrouillé, essayer avec un nouveau nom
+                dir_path = Path(output_path).parent
+                file_name = Path(output_path).stem
+                new_path = dir_path / f"{file_name}_new.xlsx"
+                wb.save(new_path)
+                messagebox.showwarning(
+                    "Attention",
+                    f"Le fichier original était inaccessible. Le résultat a été sauvegardé sous : {new_path}"
+                )
+            except Exception as e:
+                messagebox.showerror(
+                    "Erreur",
+                    f"Impossible de sauvegarder le fichier. Erreur: {str(e)}\nVérifiez que le fichier n'est pas ouvert dans Excel."
+                )
+                raise
+
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Une erreur est survenue: {str(e)}")
+            raise
 
 class BankReconciliationGUI:
     def __init__(self, root):
