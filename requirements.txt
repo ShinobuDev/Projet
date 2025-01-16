@@ -1,4 +1,7 @@
-pandas
-openpyxl
-tkinter
-pathlib 
+pandas==2.1.1
+openpyxl==3.1.2
+customtkinter==5.2.0
+pillow==10.0.1
+cx-Freeze==6.15.9
+pyinstaller==6.1.0 
+Pillow==10.0.1

@@ -345,6 +345,7 @@ class BankReconciliationGUI:
     def browse_output_file(self):
         filename = filedialog.asksaveasfilename(
             defaultextension=".xlsx",
+        
             filetypes=[("Excel files", "*.xlsx"), ("All files", "*.*")]
         )
         if filename:
@@ -399,4 +400,4 @@ def main():
     root.mainloop()
 
 if __name__ == "__main__":
-    main() 
+    main()
