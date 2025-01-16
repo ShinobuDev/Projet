@@ -3,6 +3,7 @@ from tkinter import ttk, filedialog, messagebox
 from pathlib import Path
 import tkinter as ctk  # Pour une interface moderne
 from Pillow import Image, ImageTk
+from bank_reconciliation import BankReconciliation
 
 class BankReconciliationGUI:
     def __init__(self):
