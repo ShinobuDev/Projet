@@ -1,4 +1,3 @@
 /.vscode
-/assets/icon.ico
-/assets/soliha_logo.png
-
+/assets/*.ico
+/assets/*.png
