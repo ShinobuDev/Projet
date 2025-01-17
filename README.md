@@ -1,105 +1,104 @@
-# RA-PRO ℹ️
+# RA-PRO
 
-⚠️ Dans le cadre d'une alternance
-( Aucune information privé sur une entreprise ne sera dévoilé )
+> **RA-PRO** est un projet open-source visant à faire des rapprochements bancaires simples. Il offre un environnement simple à installer et à configurer.
 
-## 1 - Quel est son but ?
+## Sommaire
+- [Fonctionnalités](#fonctionnalités)
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Roadmap](#roadmap)
+- [Contribution](#contribution)
+- [Licence](#licence)
+- [Auteurs](#auteurs)
 
-Le but du logiciel de rapprochement bancaire est d'automatiser le processus de comparaison des transactions entre deux fichiers Excel (généralement des relevés bancaires) afin d'identifier les correspondances et les différences. Cela permet aux utilisateurs de vérifier rapidement et efficacement l'exactitude de leurs enregistrements financiers.
-## 2 - Quel sont ses avantages et inconvénient ?
+---
 
-Voici les avantages et inconvénients du logiciel de rapprochement bancaire que nous avons développé :
+## Fonctionnalités
+- **Rapprochements bancaires** : Permet d'effectuer un rapprochement bancaire rapide et efficace.
+- **Création d'un fichier de résultat** : Le fichier de résultat est créer après le rapprochement dans le dossier où sont les fichiers a comparer (vous pouvez aussi choisir le dossier de destination).
 
-### Avantages ✔️
+---
 
-1. **Interface Utilisateur Intuitive** :
-   - Utilisation de `tkinter` et `customtkinter` pour une interface moderne et conviviale, facilitant l'utilisation même pour les utilisateurs non techniques.
+## Prérequis
+Si vous voulez installer **RA-PRO** avec Python a la place de télécharger simplement cliquez sur le RA-PRO.exe, assurez-vous de disposer de :
 
-2. **Automatisation du Rapprochement** :
-   - Le logiciel automatise le processus de rapprochement bancaire, réduisant le temps et les efforts nécessaires pour comparer manuellement les transactions.
+- **Langage** : Python 3.11 
+- **Outils** : Git
 
-3. **Gestion des Fichiers Excel** :
-   - Capacité à charger et traiter des fichiers Excel, qui sont couramment utilisés pour les relevés bancaires, ce qui facilite l'intégration dans les flux de travail existants.
+---
 
-4. **Rapport de Sortie** :
-   - Génération d'un fichier de sortie contenant les résultats du rapprochement, ce qui permet une documentation facile et un suivi des transactions.
+## Installation
+(Avec Python)
+1. **Cloner le dépôt**  
+   ```bash
+   git clone https://github.com/ShinobuDev/RA-PRO.git
+   cd RA-PRO
+   ```
 
-5. **Gestion des Erreurs** :
-   - Intégration de la gestion des exceptions pour informer l'utilisateur des erreurs potentielles, ce qui améliore la robustesse du logiciel.
+2. **Installer les dépendances** 
+     ```bash
+     pip install -r requirements.txt
+     ```
+(Avec le l'éxecutable (.exe))
+1. **Pas besoin d'installation**
 
-6. **Personnalisation** :
-   - Possibilité d'adapter les couleurs et le style de l'interface pour correspondre à l'identité visuelle de l'organisation (Soliha Normandie).
+---
 
-### Inconvénients ❌
+## Usage
+(Avec Python)
+1. **Lancement du projet**  
+     ```bash
+     python main.py
+     ```
 
-1. **Dépendance aux Fichiers Excel** :
-   - Le logiciel nécessite que les données soient au format Excel, ce qui peut être une limitation si les utilisateurs préfèrent d'autres formats de fichiers.
+2. **Points d’entrée**  
+   - **Par le CLI** : plus précisement a travers un terminal.
 
-2. **Complexité des Données** :
-   - Si les fichiers Excel contiennent des données mal formatées ou des erreurs, cela peut entraîner des échecs dans le rapprochement ou des résultats incorrects.
+3. **Exemples**  
+   - Montrez quelques exemples de commandes ou de requêtes pour tester rapidement.
+  
+(Avec le l'éxecutable (.exe))
+1. **Lancer le .exe**
 
-3. **Fonctionnalités Limitées** :
-   - Le logiciel se concentre principalement sur le rapprochement des montants et des descriptions. D'autres fonctionnalités avancées, comme l'analyse des tendances ou la gestion des exceptions complexes, ne sont pas incluses.
+---
 
-4. **Nécessité d'Installation** :
-   - Les utilisateurs doivent installer Python et les bibliothèques nécessaires, ce qui peut être un obstacle pour ceux qui ne sont pas familiers avec la programmation.
+## Roadmap
+- [ ] **Étape 1** : Fair un peu de design.  
+- [ ] **Étape 2** : Améliorer les performances.  
+- [ ] **Étape 3** : Ajouter la traduction en plusieurs langues.  
+- [ ] **Étape 4** : Publier la v1.0 finale.  
 
-5. **Performance** :
-   - Pour des fichiers très volumineux, le traitement peut être lent, et des optimisations peuvent être nécessaires pour améliorer la performance.
+N’hésitez pas à proposer de nouvelles idées en créant une *issue*.
 
-6. **Manque de Support Multilingue** :
-   - Actuellement, le logiciel est conçu pour un public francophone, ce qui peut limiter son utilisation dans des contextes multilingues.
+---
 
-## 3 - Comment fonctionne t-il ?
+## Contribution
+Les contributions sont les bienvenues ! Pour contribuer :
 
-Voici une explication du fonctionnement du logiciel de rapprochement bancaire que nous avons développé :
+1. **Fork** le dépôt.  
+2. Créez une nouvelle branche pour votre fonctionnalité ou correctif (`git checkout -b feature/nouvelle-fonction`).  
+3. **Commitez** vos modifications (`git commit -m "Ajout d'une nouvelle fonctionnalité"`).  
+4. **Push** votre branche (`git push origin feature/nouvelle-fonction`).  
+5. Ouvrez une *Pull Request* sur ce dépôt GitHub.
 
-### 1. **Interface Utilisateur (GUI)**
+Assurez-vous de respecter les bonnes pratiques du projet (linting, conventions de code, tests, etc.).
 
-- **Création de la fenêtre principale** : Le logiciel utilise `tkinter` et `customtkinter` pour créer une interface graphique moderne. La fenêtre principale affiche le titre "Rapprochement Bancaire - SOLIHA Normandie" et utilise des couleurs correspondant à la charte graphique de SOLIHA.
+---
 
-- **Chargement des éléments graphiques** : 
-  - Un logo est affiché en haut de la fenêtre.
-  - Des champs de saisie permettent à l'utilisateur de sélectionner deux fichiers Excel (fichiers bancaires) et de spécifier un fichier de sortie.
-  - Un bouton "Lancer le rapprochement" déclenche le processus de rapprochement.
+## Licence
+Ce projet est distribué sous aucune licence (pour l'instant).
 
-### 2. **Sélection des fichiers**
+---
 
-- **Fonctionnalité de sélection de fichiers** : L'utilisateur peut sélectionner les fichiers à l'aide de boîtes de dialogue. Les fichiers doivent être au format Excel (.xlsx).
+## Auteurs
+- **ShinobuDev** – Créateur, principal contributeur  
+- Tous les autres contributeurs seront listés dans la page [Contributors](https://github.com/ShinobuDev/RA-PRO/graphs/contributors) si il y en a.
 
-### 3. **Traitement des fichiers**
+---
 
-- **Chargement des fichiers** : Lorsque l'utilisateur clique sur le bouton pour lancer le rapprochement, le logiciel récupère les chemins des fichiers sélectionnés.
+> **Astuce** : Pour en savoir plus, consultez la [documentation officielle](https://github.com/ShinobuDev/RA-PRO/wiki) si il y en a une aussi.
 
-- **Classe `BankReconciliation`** : 
-  - Cette classe est responsable de la logique de rapprochement. Elle charge les fichiers Excel, extrait les données pertinentes (dates, descriptions, montants) et effectue le rapprochement.
-  - Les montants sont comparés pour trouver des correspondances entre les deux fichiers. Si des montants correspondent, les lignes sont enregistrées dans un fichier de sortie.
+---
 
-### 4. **Rapprochement**
-
-- **Logique de rapprochement** : 
-  - Le logiciel compare les montants des deux fichiers. Il vérifie d'abord les montants de débit et de crédit, puis les descriptions pour trouver des correspondances.
-  - Si des correspondances sont trouvées, elles sont ajoutées à une liste de résultats.
-
-### 5. **Exportation des résultats**
-
-- **Fichier de sortie** : Une fois le rapprochement terminé, les résultats sont exportés dans un nouveau fichier Excel spécifié par l'utilisateur. Ce fichier contient les lignes correspondantes ainsi que les informations sur les montants.
-
-### 6. **Barre de progression et messages d'état**
-
-- **Barre de progression** : Pendant le traitement, une barre de progression indique à l'utilisateur que le logiciel est en cours d'exécution.
-- **Messages d'état** : Des messages d'information ou d'erreur sont affichés pour informer l'utilisateur du succès ou de l'échec du traitement.
-
-### 7. **Gestion des erreurs**
-
-- **Gestion des exceptions** : Le logiciel inclut des blocs `try-except` pour gérer les erreurs potentielles, comme des fichiers non trouvés ou des problèmes de format, et affiche des messages d'erreur appropriés.
-
-
-
-
-
-
-
-
-
-
+*(Dernière mise à jour : 17/01/2025)*
