@@ -65,7 +65,7 @@ Si vous voulez installer **RA-PRO** avec Python a la place de télécharger simp
 
 ## Roadmap
 - [ ] **Étape 1** : Fair un peu de design.  
-- [ ] **Étape 2** : Améliorer les performances.  
+- [ ] **Étape 2** : Améliorer les performances et la rapidité.  
 - [ ] **Étape 3** : Ajouter la traduction en plusieurs langues.  
 - [ ] **Étape 4** : Publier la v1.0 finale.  
 
