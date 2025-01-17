@@ -10,7 +10,7 @@ Le but du logiciel de rapprochement bancaire est d'automatiser le processus de c
 
 Voici les avantages et inconvénients du logiciel de rapprochement bancaire que nous avons développé :
 
-### Avantages
+### Avantages ✔️
 
 1. **Interface Utilisateur Intuitive** :
    - Utilisation de `tkinter` et `customtkinter` pour une interface moderne et conviviale, facilitant l'utilisation même pour les utilisateurs non techniques.
@@ -30,7 +30,7 @@ Voici les avantages et inconvénients du logiciel de rapprochement bancaire que 
 6. **Personnalisation** :
    - Possibilité d'adapter les couleurs et le style de l'interface pour correspondre à l'identité visuelle de l'organisation (Soliha Normandie).
 
-### Inconvénients
+### Inconvénients ❌
 
 1. **Dépendance aux Fichiers Excel** :
    - Le logiciel nécessite que les données soient au format Excel, ce qui peut être une limitation si les utilisateurs préfèrent d'autres formats de fichiers.
@@ -49,11 +49,6 @@ Voici les avantages et inconvénients du logiciel de rapprochement bancaire que 
 
 6. **Manque de Support Multilingue** :
    - Actuellement, le logiciel est conçu pour un public francophone, ce qui peut limiter son utilisation dans des contextes multilingues.
-
-### Conclusion
-
-Le logiciel de rapprochement bancaire présente de nombreux avantages, notamment en termes d'automatisation et d'interface utilisateur. Cependant, il a aussi des inconvénients, principalement liés à la dépendance aux fichiers Excel et à la complexité des données. Une évaluation des besoins spécifiques des utilisateurs est essentielle pour déterminer si ce logiciel répond à leurs attentes.
-
 
 ## 3 - Comment fonctionne t-il ?
 
@@ -98,10 +93,6 @@ Voici une explication du fonctionnement du logiciel de rapprochement bancaire qu
 ### 7. **Gestion des erreurs**
 
 - **Gestion des exceptions** : Le logiciel inclut des blocs `try-except` pour gérer les erreurs potentielles, comme des fichiers non trouvés ou des problèmes de format, et affiche des messages d'erreur appropriés.
-
-### Conclusion
-
-Le logiciel de rapprochement bancaire est conçu pour être convivial et efficace, permettant aux utilisateurs de comparer facilement les transactions entre deux fichiers Excel et d'exporter les résultats dans un format lisible. Il utilise des bibliothèques Python modernes pour offrir une interface graphique agréable et une logique de traitement robuste.
 
 
 
