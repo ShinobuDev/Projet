@@ -76,7 +76,7 @@ N’hésitez pas à proposer de nouvelles idées en créant une *issue*.
 ## Contribution
 Les contributions sont les bienvenues ! Pour contribuer :
 
-1. **Fork** le dépôt.  
+1. **Fork** le dépôt (essayez de modifier sur les branches autres que la main).  
 2. Créez une nouvelle branche pour votre fonctionnalité ou correctif (`git checkout -b feature/nouvelle-fonction`).  
 3. **Commitez** vos modifications (`git commit -m "Ajout d'une nouvelle fonctionnalité"`).  
 4. **Push** votre branche (`git push origin feature/nouvelle-fonction`).  
