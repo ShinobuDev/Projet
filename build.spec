@@ -6,7 +6,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     datas=[
-        ('assets/soliha_logo.png', 'assets'),
+        ('assets/_logo.png', 'assets'),
         ('assets/icon.ico', 'assets')
     ],
     binaries=[],
@@ -30,7 +30,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='RapprochementBancaire_SOLIHA',
+    name='RA-PRO',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

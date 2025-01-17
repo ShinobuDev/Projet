@@ -17,7 +17,7 @@ class BankReconciliation:
         self.red_fill = PatternFill(start_color='FF6347', end_color='FF6347', fill_type='solid')
 
     def load_files(self, file1_path: str, file2_path: str) -> None:
-        """Charge les deux fichiers Excel"""
+        """Charge les deux fichiers Excel"""      
         try:
             # Charger les fichiers complets
             df1_temp = pd.read_excel(file1_path)

@@ -3,7 +3,7 @@
 block_cipher = None
 
 added_files = [
-    ('assets/soliha_logo.png', 'assets'),
+    ('assets/_logo.png', 'assets'),
     ('assets/icon.ico', 'assets'),
     ('bank_reconciliation.py', '.'),
     ('bank_reconciliation_gui.py', '.')
@@ -41,7 +41,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='RapprochementBancaire_SOLIHA',
+    name='RA-PRO',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

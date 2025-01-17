@@ -13,7 +13,7 @@ build_exe_options = {
     ],
     "excludes": [],
     "include_files": [
-        ("assets/soliha_logo.png", "assets/soliha_logo.png"),
+        ("assets/_logo.png", "assets/_logo.png"),
         ("assets/icon.ico", "assets/icon.ico")
     ]
 }
@@ -23,16 +23,16 @@ if sys.platform == "win32":
     base = "Win32GUI"
 
 setup(
-    name="Rapprochement Bancaire SOLIHA",
+    name="RA-PRO",
     version="1.0",
-    description="Application de rapprochement bancaire pour SOLIHA Normandie",
+    description="Application de rapprochement bancaire",
     options={"build_exe": build_exe_options},
     executables=[
         Executable(
             "main.py",
             base=base,
             icon="assets/icon.ico",
-            target_name="RapprochementBancaire_SOLIHA.exe"
+            target_name="RA-PRO.exe"
         )
     ]
 ) 

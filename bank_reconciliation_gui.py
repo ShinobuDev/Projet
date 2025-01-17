@@ -13,7 +13,7 @@ class BankReconciliationGUI:
         
         # Création de la fenêtre principale
         self.root = ctk.CTk()
-        self.root.title("Rapprochement Bancaire - SOLIHA Normandie")
+        self.root.title("RA-PRO")
         self.root.geometry("800x600")
         
         # Chargement de l'icône
@@ -23,12 +23,12 @@ class BankReconciliationGUI:
         except Exception as e:
             print(f"Erreur lors du chargement de l'icône: {e}")
         
-        # Couleurs SOLIHA
+        # Couleurs 
         self.colors = {
-            'blue': '#005BBB',      # Bleu SOLIHA
+            'blue': '#005BBB',      # Bleu  
             'light_blue': '#4D8DC9', # Bleu clair
-            'white': '#FFFFFF',
-            'gray': '#F5F5F5'
+            'white': '#FFFFFF',      # Blanc
+            'gray': '#F5F5F5'        # Gris
         }
         
         self.create_widgets()
@@ -38,9 +38,9 @@ class BankReconciliationGUI:
         main_frame = ctk.CTkFrame(self.root, fg_color=self.colors['white'])
         main_frame.pack(fill='both', expand=True, padx=20, pady=20)
         
-        # Logo SOLIHA avec gestion du chemin relatif
+        # Logo  avec gestion du chemin relatif
         try:
-            logo_path = Path(__file__).parent / "assets" / "soliha_logo.png"
+            logo_path = Path(__file__).parent / "assets" / "_logo.png"
             logo_img = Image.open(logo_path)
             logo_img = logo_img.resize((200, 80), Image.Resampling.LANCZOS)
             self.logo = ImageTk.PhotoImage(logo_img)
